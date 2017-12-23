@@ -2,8 +2,7 @@
     "name": "pandcar/atomic",
     "description": "Library for parsing",
 	"minimum-stability": "dev",
-    "require-all": true,
-    "require-dependencies": true,
+    "license": "proprietary",
     "authors": [
 		{
 			"name": "Oleg Isaev",
