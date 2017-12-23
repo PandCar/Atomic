@@ -1,18 +1,17 @@
 {
-    "name": "pandcar/atomic",
-    "description": "Library for parsing",
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-    "authors": [
-		{
-			"name": "Oleg Isaev",
-			"email": "vazaxx@gmail.com"
-		}
-	],
-	"require": {
-		"php": ">=5.4.0"
-	},
-	"autoload": {
-		"files": ["src/Atomic.class.php"]
-	}
+  "name": "pandcar/atomic",
+  "description": "Library for parsing",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Oleg Isaev",
+      "email": "vazaxx@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "files": ["src/Atomic.class.php"]
+  }
 }
