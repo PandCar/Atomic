@@ -1,7 +1,7 @@
 {
     "name": "pandcar/atomic",
     "description": "Library for parsing",
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
     "license": "proprietary",
     "require-all": true,
     "require-dependencies": true,
