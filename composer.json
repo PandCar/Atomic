@@ -1,0 +1,21 @@
+{
+    "name": "pandcar/atomic",
+    "description": "Library for parsing",
+    "license": "proprietary",
+    "require-all": true,
+    "require-dependencies": true,
+    "authors": [
+		{
+			"name": "Oleg Isaev",
+			"email": "vazaxx@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0"
+	},
+	"autoload": {
+		"classmap": [
+			"src"
+		]
+	}
+}
