@@ -1,7 +1,8 @@
 {
   "name": "pandcar/atomic",
   "description": "Library for parsing",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Oleg Isaev",
