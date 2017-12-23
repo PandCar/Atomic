@@ -1,8 +1,7 @@
 {
     "name": "pandcar/atomic",
     "description": "Library for parsing",
-	"minimum-stability": "dev",
-    "license": "proprietary",
+	"version": "1.0.1",
     "authors": [
 		{
 			"name": "Oleg Isaev",
@@ -13,8 +12,6 @@
 		"php": ">=5.4.0"
 	},
 	"autoload": {
-		"classmap": [
-			"src"
-		]
+		"files": ["src/Atomic.class.php"]
 	}
 }
