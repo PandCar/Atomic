@@ -2,7 +2,6 @@
   "name": "pandcar/atomic",
   "description": "Library for parsing",
   "license": "proprietary",
-  "prefer-stable": true,
   "authors": [
     {
       "name": "Oleg Isaev",
