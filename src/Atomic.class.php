@@ -6,6 +6,8 @@
  * Skype: pandcar97
  */
 
+namespace PandCar;
+
 class Atomic
 {
 	protected	$path_tmp = __DIR__,
