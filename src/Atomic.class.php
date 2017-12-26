@@ -6,7 +6,7 @@
  * Skype: pandcar97
  */
 
-namespace PandCar;
+//namespace PandCar;
 
 class Atomic
 {
