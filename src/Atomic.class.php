@@ -6,8 +6,6 @@
  * Skype: pandcar97
  */
 
-//namespace PandCar;
-
 class Atomic
 {
 	protected	$path_tmp = __DIR__,
@@ -74,6 +72,24 @@ class Atomic
 		$this->path_cookie = $this->path_tmp.'/'.$value.'.cookie';
 	}
 	
+	public function strTimeToUnix($string, $patterns = [], $months = false)
+	{
+		$string = mb_strtolower( trim($string), 'utf8');
+		
+		if (! empty($months))
+		{
+			$at = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+			
+			$string = str_replace($months, $at, $string);
+		}
+		
+		$string = preg_replace( array_keys($patterns), array_values($patterns), $string);
+		
+		$timeunix = strtotime($string);
+		
+		return $timeunix > 0 ? $timeunix : 0;
+	}
+	
 	// Работа с сервисом ruCaptcha
 	public function ruCaptcha($img_path, $params = [])
 	{
@@ -99,7 +115,7 @@ class Atomic
 		$in = $this->request([
 			'url'			=> 'http://rucaptcha.com/in.php',
 			'post/build'	=> array_merge($post, $params),
-			'json'			=> true,
+			'form'			=> 'json',
 		]);
 		
 		if ($in['status'] == 0)
@@ -129,7 +145,7 @@ class Atomic
 						'id'		=> $in['request'],
 						'json'		=> 1,
 					],
-					'json' => true,
+					'form' => 'json',
 				]);
 				
 				if ($res['status'] == 0)
@@ -195,6 +211,22 @@ class Atomic
 		return false;
 	}
 	
+	public function strFilter($string, $items = [])
+	{
+		foreach ($items as $value)
+		{
+			if ($value == ':trim') {
+				$string = trim($string);
+			} elseif ($value == ':tags') {
+				$string = strip_tags($string);
+			} else {
+				$string = str_replace($value, '', $string);
+			}
+		}
+		
+		return $string;
+	}
+	
 	// Поиск вхождения в строке
 	public function existStr($string, $search)
 	{
@@ -246,6 +278,11 @@ class Atomic
 		}
 		
 		return false;
+	}
+	
+	public function XMLDecode($string)
+	{
+		return $this->xml2array( @simplexml_load_string($string, 'SimpleXMLElement', LIBXML_NOCDATA) );
 	}
 	
 	// Выводит массив кук
@@ -384,7 +421,7 @@ class Atomic
 		// Конструктор query data
 		if (! empty($data['get']))
 		{
-			$data['url'] .= ($this->existStr($data['url'], '?') ? '&' : '?').http_build_query($data['get']);
+			$data['url'] .= ($this->existStr($data['url'], '?') ? '&' : '?').http_build_query($data['get'], '', '&');
 		}
 		
 		// Основные параметры
@@ -403,7 +440,7 @@ class Atomic
 			if (isset($data['post'])) {
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data['post']);
 			} else {
-				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data['post/build']));
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data['post/build'], '', '&'));
 			}
 		}
 		
@@ -473,7 +510,7 @@ class Atomic
 			}
 			else
 			{
-				curl_setopt($ch, CURLOPT_COOKIE, str_replace('&', '; ', http_build_query($data['cookie/build'])));
+				curl_setopt($ch, CURLOPT_COOKIE, str_replace('&', '; ', http_build_query($data['cookie/build'], '', '&')));
 			}
 		}
 		elseif (! empty($this->path_cookie)|| !empty($data['cookie_path']))
@@ -539,8 +576,6 @@ class Atomic
 			
 			switch ($data['form'])
 			{
-				case 'json': $response = json_decode($body, true); break;
-				
 				case 'headers': $response = $headers; break;
 				
 				case 'body': $response = $body; break;
@@ -551,6 +586,10 @@ class Atomic
 						'body'		=> $body,
 					];
 				break;
+				
+				case 'json': $response = json_decode($body, true); break;
+				
+				case 'xml': $response = $this->XMLDecode($body); break;
 			}
 		}
 		
@@ -585,5 +624,15 @@ class Atomic
 		{
 			return explode("\r\n\r\n", $response, 2);
 		}
+	}
+	
+	protected function xml2array($xmlObject, $out = [])
+	{
+		foreach ((array) $xmlObject as $index => $node)
+		{
+			$out[$index] = (is_object($node) ? $this->xml2array($node) : $node);
+		}
+		
+		return $out;
 	}
 }
