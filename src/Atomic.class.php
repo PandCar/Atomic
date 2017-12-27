@@ -431,6 +431,8 @@ class Atomic
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, (! empty($data['connect_timeout']) ? $data['connect_timeout'] : 5));
 		curl_setopt($ch, CURLOPT_TIMEOUT, (! empty($data['timeout']) ? $data['timeout'] : 20));
 		curl_setopt($ch, CURLOPT_ENCODING, '');
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		
 		// Post запрос
 		if (isset($data['post']) || isset($data['post/build']))
