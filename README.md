@@ -19,5 +19,9 @@ $atom = new Atomic([
 If you want to test new and possibly unstable code that is in the master branch, and which hasn't yet been released, then you can use master instead (at your own risk):
 
 ```sh
-composer require pandcar/atomic dev-master
+composer require pandcar/atomic:dev-master
 ```
+
+## Examples
+
+All examples can be found [here](https://github.com/PandCar/Atomic/tree/master/examples).
