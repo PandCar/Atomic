@@ -5,17 +5,19 @@
 ### Using Composer
 
 ```sh
-composer require mgp25/instagram-php
+composer require pandcar/atomic
 ```
 
 ```php
 require __DIR__.'/../vendor/autoload.php';
 
-$ig = new \InstagramAPI\Instagram();
+$atom = new Atomic([
+  'path_tmp' => __DIR__ .'/tmp'
+]);
 ```
 
 If you want to test new and possibly unstable code that is in the master branch, and which hasn't yet been released, then you can use master instead (at your own risk):
 
 ```sh
-composer require mgp25/instagram-php dev-master
+composer require pandcar/atomic dev-master
 ```
