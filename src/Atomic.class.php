@@ -11,6 +11,7 @@ class Atomic
 	protected	$path_tmp = __DIR__,
 				$path_cookie = null,
 				$proxy = null,
+				$callback_request = null,
 				$headers = [
 					'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
 					'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -568,6 +569,16 @@ class Atomic
 				'response'		=> $response,
 			]);
 			echo "===== Debug end ========\n\n";
+		}
+		
+		if (! empty($this->callback_request))
+		{
+			$callback = $this->callback_request;
+			
+			if (is_callable($callback))
+			{
+				$callback($data, $response);
+			}
 		}
 		
 		// Следование по заголовку Location
