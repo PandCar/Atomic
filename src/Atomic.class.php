@@ -72,24 +72,6 @@ class Atomic
 		$this->path_cookie = $this->path_tmp.'/'.$value.'.cookie';
 	}
 	
-	public function strTimeToUnix($string, $patterns = [], $months = false)
-	{
-		$string = mb_strtolower( trim($string), 'utf8');
-		
-		if (! empty($months))
-		{
-			$at = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-			
-			$string = str_replace($months, $at, $string);
-		}
-		
-		$string = preg_replace( array_keys($patterns), array_values($patterns), $string);
-		
-		$timeunix = strtotime($string);
-		
-		return $timeunix > 0 ? $timeunix : 0;
-	}
-	
 	// Работа с сервисом ruCaptcha
 	public function ruCaptcha($img_path, $params = [])
 	{
@@ -280,6 +262,31 @@ class Atomic
 		return false;
 	}
 	
+	public function strTimeToUnix($string, $patterns = [], $months = false)
+	{
+		$string = mb_strtolower( trim($string), 'utf8');
+		
+		if (! empty($months))
+		{
+			$at = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+			
+			$string = str_replace($months, $at, $string);
+		}
+		
+		$patterns_new = [];
+		
+		foreach ($patterns as $key => $value)
+		{
+			$patterns_new['~'.$key.'~isu'] = $value;
+		}
+		
+		$string = preg_replace( array_keys($patterns_new), array_values($patterns_new), $string);
+		
+		$timeunix = strtotime($string);
+		
+		return $timeunix > 0 ? $timeunix : 0;
+	}
+	
 	public function XMLDecode($string)
 	{
 		return $this->xml2array( @simplexml_load_string($string, 'SimpleXMLElement', LIBXML_NOCDATA) );
@@ -289,6 +296,8 @@ class Atomic
 	public function getCookie($key = null)
 	{
 		$array = [];
+		
+		$this->cookieFileWp($this->path_cookie);
 		
 		$string = file_get_contents($this->path_cookie);
 		
@@ -310,6 +319,8 @@ class Atomic
 	// Добавляет или изменяет куку
 	public function setCookie($domen, $key, $value, $time = 0)
 	{
+		$this->cookieFileWp($this->path_cookie);
+		
 		$data	= file($this->path_cookie);
 		$count	= count($data);
 		$insert	= true;
@@ -336,6 +347,8 @@ class Atomic
 	// Удаляет одну или все куки
 	public function removeCookie($key = null, $domen = null)
 	{
+		$this->cookieFileWp($this->path_cookie);
+		
 		$data = file($this->path_cookie);
 		
 		if (! empty($key))
@@ -526,6 +539,8 @@ class Atomic
 			
 			$data['cookie_path'] = $cookie_path;
 			
+			$this->cookieFileWp($cookie_path);
+			
 			curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_path);
 			curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_path);
 		}
@@ -560,11 +575,13 @@ class Atomic
 		{
 			if (list($headers, $body) = $this->expResponse($response))
 			{
-				if (preg_match("~Location:(.+?)\n~is", $headers, $preg))
+				if ($this->existStr($headers, 'Location:'))
 				{
+					$cinfo = curl_getinfo($ch);
+					
 					unset($data['url'], $data['get'], $data['post'], $data['post/build']);
 					
-					$data['url'] = trim($preg[1]);
+					$data['url'] = $cinfo['redirect_url'];
 					
 					return $this->request($data);
 				}
@@ -625,6 +642,14 @@ class Atomic
 		else
 		{
 			return explode("\r\n\r\n", $response, 2);
+		}
+	}
+	
+	protected function cookieFileWp($path)
+	{
+		if (! file_exists($path))
+		{
+			file_put_contents($path, '');
 		}
 	}
 	
