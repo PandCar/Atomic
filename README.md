@@ -168,7 +168,7 @@ $string = $atom->strFilter($string, [
 #### Преобразование времени в timestamp
 
 ```php
-$timestamp = $this->atom->strTimeToUnix(
+$timestamp = $atom->strTimeToUnix(
 	$time, [
 		'(.+) час\. назад'	=> '-$1 hour',
 		'(.+) г\. в (.+)'	=> '$1, $2',
@@ -181,6 +181,42 @@ $timestamp = $this->atom->strTimeToUnix(
 		'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
 	]
 );
+```
+
+## Использование сервиса ruCaptcha
+
+```php
+$atom->set('rucaptcha_key', '6df61bfae47c6a9214729143c4fc9a82');
+
+try {
+	$code = $atom->ruCaptcha($img_path, [
+		'phrase' => 0,
+		'regsense' => 0,
+	]);
+}
+catch (Exception $e) {
+    echo 'Выброшено исключение: '. $e->getMessage();
+}
+```
+
+## Использование PhantomJS
+
+```php
+$atom->set('phantomjs_path', __DIR__ .'/bin/phantomjs.exe');
+
+$script = '
+	console.log('Loading a web page');
+	var page = require('webpage').create();
+	var url = 'http://phantomjs.org/';
+	page.open(url, function (status) {
+	  //Page is loaded!
+	  phantom.exit();
+	});
+';
+
+$result = $atom->PhantomJS($script, [
+	'cookies-file' => __DIR__ .'/tmp/phantomjs.cookie'
+]);
 ```
 
 ## Простая авторизация
