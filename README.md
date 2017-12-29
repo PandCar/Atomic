@@ -132,7 +132,7 @@ $atom->removeCookie($key, $domen);
 
 ## Инструменты
 
-##### Обёртка над preg_match
+#### Обёртка над preg_match()
 
 ```php
 $string = $atom->regexp('>([^<]+)</span>', $html);
