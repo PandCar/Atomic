@@ -1,8 +1,8 @@
 # ![logo](/examples/assets/logo2.png) Atomic [![Latest Stable Version](https://poser.pugx.org/PandCar/Atomic/v/stable.svg)](https://packagist.org/packages/pandcar/atomic) [![Total Downloads](https://poser.pugx.org/PandCar/Atomic/downloads)](https://packagist.org/packages/pandcar/atomic) ![compatible](https://img.shields.io/badge/php-%3E=5.4-green.svg)
 
-## Установка
+## РЈСЃС‚Р°РЅРѕРІРєР°
 
-### Через Composer
+### Р§РµСЂРµР· Composer
 
 ```sh
 composer require pandcar/atomic
@@ -16,6 +16,6 @@ $atom = new Atomic([
 ]);
 ```
 
-## Примеры
+## РџСЂРёРјРµСЂС‹
 
-Все примеры можно найти [здесь](https://github.com/PandCar/Atomic/tree/master/examples).
+Р’СЃРµ РїСЂРёРјРµСЂС‹ РјРѕР¶РЅРѕ РЅР°Р№С‚Рё [Р·РґРµСЃСЊ](https://github.com/PandCar/Atomic/tree/master/examples).
