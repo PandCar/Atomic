@@ -154,7 +154,9 @@ $array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
 #### Поиск вхождения в строке
 
 ```php
-var_dump( $atom->existStr($html, '<span>') ); // true
+$bool = $atom->existStr($html, '<span>');
+
+var_dump($bool); // true
 ```
 
 #### Фильтр
