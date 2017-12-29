@@ -32,6 +32,8 @@ $atom->set('path_tmp', __DIR__ .'/tmp');
 $atom->set([
 	// Папка для временных файлов (cookie, phantomjs-tmp)
 	$path_tmp = __DIR__ .'/tmp',
+	// Имя куки
+	$name_cookie = 'atomic',
 	// Кука по умолчанию
 	$path_cookie = __DIR__ .'/tmp/atomic.cookie',
 	// Прокси сервер по умолчанию
@@ -50,6 +52,46 @@ $atom->set([
 ]);
 ```
 
+## Описание опций $this->request();
+
+```php
+// Простой get запрос
+$result = $atom->request('http://site.ru/');
+
+$result = $atom->request([
+	'url' => 'http://site.ru/',
+	'get' => [
+		'foo' => 'bar',
+	],
+	'connect_timeout' => 5,
+	'timeout' => 20,
+	'post' => 'foo=bar&ddd=ccc',
+	'post/build' => [
+		'username' => $login,
+		'password' => $password,
+		'submit' => 'Войти',
+	],
+	'file_handle' => $fopen,
+	'headers' => [
+		'Referer: http://site.ru/',
+	],
+	'headers/merge' => [
+		'Referer: http://site.ru/',
+	],
+	'proxy' => 'http://login:password@host:port',
+	'cookie' => 'foo=bar&ddd=ccc',
+	'cookie/build' => [
+		'foo' => 'bar',
+	],
+	'cookie_path' => __DIR__ .'/tmp/atomic.cookie',
+	'charset' => 'windows-1251',
+	'follow_location' => true,
+	'form' => 'json',
+	'debug' => true,
+	'no_callback' => true,
+]);
+```
+
 ## Простая авторизация
 
 ```php
@@ -58,7 +100,6 @@ $result = $atom->request([
 	'post/build' => [
 		'username' => $login,
 		'password' => $password,
-		'checkbox' => 1,
 		'submit' => 'Войти',
 	],
 	'headers/merge' =>[
