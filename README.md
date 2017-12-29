@@ -59,35 +59,53 @@ $atom->set([
 $result = $atom->request('http://site.ru/');
 
 $result = $atom->request([
+	// url запроса
 	'url' => 'http://site.ru/',
+	// Конструктор query
 	'get' => [
 		'foo' => 'bar',
 	],
+	// Ограничение времени на подключение
 	'connect_timeout' => 5,
+	// Ограничение времени на выполнение запроса
 	'timeout' => 20,
+	// Простой Post (приоритет)
 	'post' => 'foo=bar&ddd=ccc',
+	// Конструктор Post
 	'post/build' => [
 		'username' => $login,
 		'password' => $password,
 		'submit' => 'Войти',
 	],
+	// Загрузка конктента в файл
 	'file_handle' => $fopen,
+	// Заголовки (приоритет)
 	'headers' => [
 		'Referer: http://site.ru/',
 	],
+	// Сливает заголовки с заголовками по умолчанию
 	'headers/merge' => [
 		'Referer: http://site.ru/',
 	],
+	// Proxy (приоритет)
 	'proxy' => 'http://login:password@host:port',
+	// Куки (приоритет)
 	'cookie' => 'foo=bar&ddd=ccc',
+	// Конструктор cookie
 	'cookie/build' => [
 		'foo' => 'bar',
 	],
+	// Путь к файл cookie
 	'cookie_path' => __DIR__ .'/tmp/atomic.cookie',
+	// Сменить кодировку контента из windows-1251 на utf8
 	'charset' => 'windows-1251',
+	// Следовать по заголовкам Location
 	'follow_location' => true,
+	// Форма данных (headers, body, array, json)
 	'form' => 'json',
+	// Включает отладку
 	'debug' => true,
+	// Не вызывать callback_request
 	'no_callback' => true,
 ]);
 ```
