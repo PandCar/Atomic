@@ -142,6 +142,14 @@ $string = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
 $array = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, true);
 ```
 
+#### Обёртка над preg_match_all()
+
+```php
+$array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html);
+
+$array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
+```
+
 ## Простая авторизация
 
 ```php
