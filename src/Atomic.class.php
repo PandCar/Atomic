@@ -486,7 +486,7 @@ class Atomic
 				
 				foreach ($new as $key => $value)
 				{
-					$data['headers/merge'][] = $key.':'.$value;
+					$data['headers/merge'][] = $key.': '.$value;
 				}
 			}
 			
@@ -631,11 +631,11 @@ class Atomic
 	{
 		$array = [];
 		
-		foreach ($headers as $value)
+		foreach ($headers as $row)
 		{
-			$exp = explode(':', $value, 2);
+			list($key, $value) = explode(':', $row, 2);
 			
-			$array[ mb_strtolower($exp[0]) ] = $exp[1];
+			$array[ trim( mb_strtolower($key) ) ] = trim($value);
 		}
 		
 		return $array;
