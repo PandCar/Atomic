@@ -2,14 +2,14 @@
 
 ## Установка
 
-### Через Composer
+Для установки Atomic выполните команду:
 
 ```sh
 composer require pandcar/atomic
 ```
 
 ```php
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 $atom = new Atomic([
   'path_tmp' => __DIR__ .'/tmp'
