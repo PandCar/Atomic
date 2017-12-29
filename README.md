@@ -8,14 +8,36 @@
 composer require pandcar/atomic
 ```
 
+## Быстрый старт
+
 ```php
 require __DIR__.'/vendor/autoload.php';
 
 $atom = new Atomic([
   'path_tmp' => __DIR__ .'/tmp'
 ]);
+
+$result = $atom->request('http://site.ru/');
 ```
 
-## Примеры
-
 Все примеры можно найти [здесь](https://github.com/PandCar/Atomic/tree/master/examples).
+
+## Простая авторизация
+
+```php
+$result = $atom->request([
+	'url' => 'http://site.ru/login.php',
+	'post/build' => [
+		'username' => $login,
+		'password' => $password,
+		'checkbox' => 1,
+		'submit' => 'Войти',
+	],
+	'headers/merge' =>[
+		'Referer: http://site.ru/',
+	],
+]);
+
+// Проверка авторизации
+var_dump($atom->existStr($result, 'outlogin.php"'));
+```
