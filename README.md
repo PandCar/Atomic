@@ -1,8 +1,8 @@
 # ![logo](/examples/assets/logo2.png) Atomic [![Latest Stable Version](https://poser.pugx.org/PandCar/Atomic/v/stable.svg)](https://packagist.org/packages/pandcar/atomic) [![Total Downloads](https://poser.pugx.org/PandCar/Atomic/downloads)](https://packagist.org/packages/pandcar/atomic) ![compatible](https://img.shields.io/badge/php-%3E=5.4-green.svg)
 
-## Installation
+## Установка
 
-### Using Composer
+### Через Composer
 
 ```sh
 composer require pandcar/atomic
@@ -16,12 +16,6 @@ $atom = new Atomic([
 ]);
 ```
 
-If you want to test new and possibly unstable code that is in the master branch, and which hasn't yet been released, then you can use master instead (at your own risk):
+## Примеры
 
-```sh
-composer require pandcar/atomic:dev-master
-```
-
-## Examples
-
-All examples can be found [here](https://github.com/PandCar/Atomic/tree/master/examples).
+Все примеры можно найти [здесь](https://github.com/PandCar/Atomic/tree/master/examples).
