@@ -137,6 +137,7 @@ $atom->removeCookie($key, $domen);
 ```php
 $string = $atom->regexp('>([^<]+)</span>', $html);
 
+// Получает второй элемент
 $string = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
 
 $array = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, true);
@@ -148,6 +149,12 @@ $array = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, true);
 $array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html);
 
 $array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
+```
+
+#### Поиск вхождения в строке
+
+```php
+var_dump( $atom->existStr($html, '<span>') ); // true
 ```
 
 ## Простая авторизация
