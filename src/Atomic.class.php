@@ -571,7 +571,7 @@ class Atomic
 			echo "===== Debug end ========\n\n";
 		}
 		
-		if (! empty($this->callback_request))
+		if (!empty($this->callback_request) && !isset($data['no_callback']))
 		{
 			$callback = $this->callback_request;
 			
