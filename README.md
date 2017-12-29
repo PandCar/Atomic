@@ -58,6 +58,13 @@ $atom->set([
 // Простой get запрос
 $result = $atom->request('http://site.ru/');
 
+// Мульти запрос
+$result = $atom->request_multi([
+	['url' => 'http://site.ru/'],
+	['url' => 'http://site2.ru/'],
+]);
+
+// Все опции
 $result = $atom->request([
 	// url запроса
 	'url' => 'http://site.ru/',
@@ -108,6 +115,12 @@ $result = $atom->request([
 	// Не вызывать callback_request
 	'no_callback' => true,
 ]);
+```
+
+## Инструменты
+
+```php
+
 ```
 
 ## Простая авторизация
