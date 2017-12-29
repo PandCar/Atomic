@@ -59,7 +59,7 @@ $atom->set([
 $result = $atom->request('http://site.ru/');
 
 // Мульти запрос
-$result = $atom->request_multi([
+$array = $atom->request_multi([
 	['url' => 'http://site.ru/'],
 	['url' => 'http://site2.ru/'],
 ]);
