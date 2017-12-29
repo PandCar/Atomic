@@ -132,10 +132,14 @@ $atom->removeCookie($key, $domen);
 
 ## Инструменты
 
-##### $this->regexp();
+##### Обёртка над preg_match
 
 ```php
-$string = $atom->regexp($pattern, $string, $get = null);
+$string = $atom->regexp('>([^<]+)</span>', $html);
+
+$string = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
+
+$array = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, true);
 ```
 
 ## Простая авторизация
