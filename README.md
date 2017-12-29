@@ -132,8 +132,10 @@ $atom->removeCookie($key, $domen);
 
 ## Инструменты
 
-```php
+##### $this->regexp();
 
+```php
+$string = $atom->regexp($pattern, $string, $get = null);
 ```
 
 ## Простая авторизация
