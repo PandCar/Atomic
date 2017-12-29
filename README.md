@@ -117,6 +117,19 @@ $result = $atom->request([
 ]);
 ```
 
+## Работа с cookie файлом по умолчанию
+
+```php
+// Получить массив кук
+$array = $atom->getCookie();
+
+// Установка куки
+$atom->setCookie($domen, $key, $value, $time);
+
+// Удаление одной или всех кук (если без параметров)
+$atom->removeCookie($key, $domen);
+```
+
 ## Инструменты
 
 ```php
