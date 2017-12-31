@@ -25,6 +25,11 @@ $result = $atom->request('http://site.ru/');
 ## Настройки
 
 ```php
+// В конструкторе
+$atom = new Atomic([
+  'path_tmp' => __DIR__ .'/tmp'
+]);
+
 // Одиночная настройка
 $atom->set('path_tmp', __DIR__ .'/tmp');
 
