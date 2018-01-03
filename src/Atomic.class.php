@@ -11,7 +11,8 @@ class Atomic
 	protected	$path_tmp = __DIR__,
 				$path_cookie = null,
 				$proxy = null,
-				$callback_request = null,
+				$callback_request_start = null,
+				$callback_request_end = null,
 				$headers = [
 					'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
 					'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -430,6 +431,21 @@ class Atomic
 			return $this->curlPreparation(['url' => $data]);
 		}
 		
+		if (!empty($this->callback_request_start) && !isset($data['no_callback']))
+		{
+			$callback = $this->callback_request_start;
+			
+			if (is_callable($callback))
+			{
+				$array = $callback($data);
+				
+				if (is_array($array))
+				{
+					$data = $array;
+				}
+			}
+		}
+		
 		$ch = curl_init();
 		
 		// Конструктор query data
@@ -571,9 +587,9 @@ class Atomic
 			echo "===== Debug end ========\n\n";
 		}
 		
-		if (!empty($this->callback_request) && !isset($data['no_callback']))
+		if (!empty($this->callback_request_end) && !isset($data['no_callback']))
 		{
-			$callback = $this->callback_request;
+			$callback = $this->callback_request_end;
 			
 			if (is_callable($callback))
 			{
