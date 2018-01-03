@@ -43,8 +43,10 @@ $atom->set([
 	'path_cookie' => __DIR__ .'/tmp/atomic.cookie',
 	// Прокси сервер по умолчанию
 	'proxy' => 'http://login:password@host:port',
+	// Лямбда до выполнения $this->request(); влияющая на запрос
+	'callback_request_start' => function($query){},
 	// Лямбда после каждого выполнения $this->request();
-	'callback_request' => function($query, $response){},
+	'callback_request_end' => function($query, $response){},
 	// Путь до PhantomJS
 	'phantomjs_path' => __DIR__ .'/bin/phantomjs.exe',
 	// Ключь сервиса ruCaptcha
