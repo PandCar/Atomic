@@ -177,8 +177,10 @@ $string = $atom->strFilter($string, [
 #### Преобразование времени в timestamp
 
 ```php
+$time_str = '04 декабря 2016, в 10:05';
+
 $timestamp = $atom->strTimeToUnix(
-	$time, [
+	$time_str, [
 		'(.+) час\. назад'	=> '-$1 hour',
 		'(.+) г\. в (.+)'	=> '$1, $2',
 		'(.+), в (.+)'		=> '$1, $2',
