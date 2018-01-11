@@ -2,8 +2,8 @@
 
 /**
  * @author Oleg Isaev
- * @contacts: vk.com/id50416641, t.me/pandcar, github.com/pandcar
- * @version: 1.2.0
+ * @contacts vk.com/id50416641, t.me/pandcar, github.com/pandcar
+ * @version 1.2.0
  */
 
 class Atomic
