@@ -256,6 +256,7 @@ class Atomic
 			elseif (is_array($get))
 			{
 				$result = [];
+				
 				foreach ($get as $key)
 				{
 					if (isset($array[$key]))
