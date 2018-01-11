@@ -2,7 +2,7 @@
 
 /**
  * @author Oleg Isaev
- * @contacts vk.com/id50416641 t.me/pandcar github.com/pandcar
+ * @contacts vk.com/id50416641, t.me/pandcar, github.com/pandcar
  * @version 1.2.0
  */
 
