@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Автор Олег Исаев
- * ВКонтакте: vk.com/id50416641
- * Skype: pandcar97
+ * @author Oleg Isaev
+ * @contacts: vk.com/id50416641, t.me/pandcar, github.com/pandcar
+ * @version: 1.2.0
  */
 
 class Atomic
@@ -248,6 +248,19 @@ class Atomic
 					foreach ($item as $key2 => $value)
 					{
 						$result[$key2][$key] = $value;
+					}
+				}
+				
+				return $result;
+			}
+			elseif (is_array($get))
+			{
+				$result = [];
+				foreach ($get as $key)
+				{
+					if (isset($array[$key]))
+					{
+						$result[] = $array[$key];
 					}
 				}
 				
