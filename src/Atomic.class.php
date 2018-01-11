@@ -89,17 +89,17 @@ class Atomic
 		
 		unset($params['key'], $params['method'], $params['body'], $params['json']);
 		
-		$post = [
-			'key'		=> $this->rucaptcha_key,
-			'method'	=> 'base64',
-			'body'		=> base64_encode(file_get_contents($img_path)),
-			'json'		=> 1,
-		];
-		
 		$in = $this->request([
-			'url'			=> 'http://rucaptcha.com/in.php',
-			'post/build'	=> array_merge($post, $params),
-			'form'			=> 'json',
+			'url' => 'http://rucaptcha.com/in.php',
+			'post/build' => array_merge([
+						'key'		=> $this->rucaptcha_key,
+						'method'	=> 'base64',
+						'body'		=> base64_encode(file_get_contents($img_path)),
+						'json'		=> 1,
+					], 
+					$params
+				),
+			'form' => 'json',
 		]);
 		
 		if ($in['status'] == 0)
