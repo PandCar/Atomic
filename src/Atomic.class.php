@@ -259,10 +259,7 @@ class Atomic
 				
 				foreach ($get as $key)
 				{
-					if (isset($array[$key]))
-					{
-						$result[] = $array[$key];
-					}
+					$result[] = (isset($array[$key]) ? $array[$key] : false);
 				}
 				
 				return $result;
