@@ -41,6 +41,10 @@ $atom->set([
 	'name_cookie' => 'atomic',
 	// Кука по умолчанию
 	'path_cookie' => __DIR__ .'/tmp/atomic.cookie',
+	// Таймаут подключения
+	'connect_timeout' => 20,
+	// Таймаут запроса
+	'timeout' => 60,
 	// Прокси сервер по умолчанию
 	'proxy' => 'http://login:password@host:port',
 	// Лямбда до выполнения $this->request(); влияющая на запрос
@@ -156,6 +160,8 @@ $array = $atom->regexp('>([^<]+)</span>, <b>([0-9]+?)', $html, true);
 $array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html);
 
 $array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html, 2);
+
+$array = $atom->regexpAll('>([^<]+)</span>, <b>([0-9]+?)', $html, [2, 1]);
 ```
 
 #### Поиск вхождения в строке
