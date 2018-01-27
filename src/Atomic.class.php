@@ -10,6 +10,8 @@ class Atomic
 {
 	protected	$path_tmp = __DIR__,
 				$path_cookie = null,
+				$connect_timeout = 20,
+				$timeout = 60,
 				$proxy = null,
 				$callback_request_start = null,
 				$callback_request_end = null,
@@ -469,8 +471,8 @@ class Atomic
 		curl_setopt($ch, CURLOPT_URL, $data['url']); 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, (! empty($data['connect_timeout']) ? $data['connect_timeout'] : 5));
-		curl_setopt($ch, CURLOPT_TIMEOUT, (! empty($data['timeout']) ? $data['timeout'] : 20));
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, (! empty($data['connect_timeout']) ? $data['connect_timeout'] : $this->connect_timeout));
+		curl_setopt($ch, CURLOPT_TIMEOUT, (! empty($data['timeout']) ? $data['timeout'] : $this->timeout));
 		curl_setopt($ch, CURLOPT_ENCODING, '');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -660,7 +662,7 @@ class Atomic
 		
 		foreach ($headers as $row)
 		{
-			list($key, $value) = explode(':', $row, 2);
+			@list($key, $value) = explode(':', $row, 2);
 			
 			$array[ trim( mb_strtolower($key) ) ] = trim($value);
 		}
