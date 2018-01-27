@@ -41,9 +41,9 @@ $atom->set([
 	'name_cookie' => 'atomic',
 	// Кука по умолчанию
 	'path_cookie' => __DIR__ .'/tmp/atomic.cookie',
-	// Таймаут подключения
+	// Ограничение времени на подключение (сек.)
 	'connect_timeout' => 20,
-	// Таймаут запроса
+	// Ограничение времени на выполнение запроса (сек.)
 	'timeout' => 60,
 	// Прокси сервер по умолчанию
 	'proxy' => 'http://login:password@host:port',
@@ -83,9 +83,9 @@ $result = $atom->request([
 	'get' => [
 		'foo' => 'bar',
 	],
-	// Ограничение времени на подключение
+	// Ограничение времени на подключение (сек.)
 	'connect_timeout' => 5,
-	// Ограничение времени на выполнение запроса
+	// Ограничение времени на выполнение запроса (сек.)
 	'timeout' => 20,
 	// Простой Post (приоритет)
 	'post' => 'foo=bar&ddd=ccc',
@@ -105,7 +105,7 @@ $result = $atom->request([
 	'headers/merge' => [
 		'Referer: http://site.ru/',
 	],
-	// Proxy (приоритет)
+	// Прокси
 	'proxy' => 'http://login:password@host:port',
 	// Куки (приоритет)
 	'cookie' => 'foo=bar&ddd=ccc',
@@ -119,7 +119,7 @@ $result = $atom->request([
 	'charset' => 'windows-1251',
 	// Следовать по заголовкам Location
 	'follow_location' => true,
-	// Форма данных (headers, body, array, json)
+	// Форма данных (headers, body, array, json, xml)
 	'form' => 'json',
 	// Включает отладку
 	'debug' => true,
