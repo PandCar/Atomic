@@ -97,6 +97,8 @@ $result = $atom->request([
 	],
 	// Загрузка конктента в файл
 	'file_handle' => $fopen,
+	// План заголовков
+	'headers_plan' => 'ajax',
 	// Заголовки (приоритет)
 	'headers' => [
 		'Referer: http://site.ru/',
