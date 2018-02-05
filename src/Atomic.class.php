@@ -3,7 +3,7 @@
 /**
  * @author Oleg Isaev
  * @contacts vk.com/id50416641, t.me/pandcar, github.com/pandcar
- * @version 1.2.1
+ * @version 1.2.2
  */
 
 class Atomic
@@ -16,10 +16,23 @@ class Atomic
 				$callback_request_start = null,
 				$callback_request_end = null,
 				$headers = [
-					'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-					'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-					'Upgrade-Insecure-Requests: 1',
-					'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36',
+					'default' => [
+						'Connection: keep-alive',
+						'Cache-Control: max-age=0',
+						'Upgrade-Insecure-Requests: 1',
+						'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
+						'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+						'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+					],
+					'ajax' => [
+						'Connection: keep-alive',
+						'Cache-Control: max-age=0',
+						'Accept: */*',
+						'X-Requested-With: XMLHttpRequest',
+						'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
+						'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+						'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+					],
 				],
 				$phantomjs_path = null,
 				$rucaptcha_key = null,
@@ -495,6 +508,26 @@ class Atomic
 			curl_setopt($ch, CURLOPT_FILE, $data['file_handle']);
 		}
 		
+		$headers_key = array_keys($this->headers)[0];
+		
+		if (is_array($this->headers[$headers_key]))
+		{
+			$headers = $this->headers[$headers_key];
+		}
+		else
+		{
+			$headers = $this->headers;
+		}
+		
+		// План заголовков по умолчанию
+		if (isset($data['headers_plan']))
+		{
+			if ( isset($this->headers[ $data['headers_plan'] ]) )
+			{
+				$headers = $this->headers[ $data['headers_plan'] ];
+			}
+		}
+		
 		// Заголовки
 		if (isset($data['headers']))
 		{
@@ -505,27 +538,29 @@ class Atomic
 		}
 		elseif (! empty($data['headers/merge']))
 		{
-			if (! empty($this->headers))
+			if (! empty($headers))
 			{
-				$new = $this->expHeaders($this->headers);
+				$data['headers'] = $headers;
+				
+				$new = $this->expHeaders($headers);
 				$new2 = $this->expHeaders($data['headers/merge']);
-				$data['headers/merge'] = [];
+				$headers_merge = [];
 				
 				$new = array_merge($new, $new2);
 				
 				foreach ($new as $key => $value)
 				{
-					$data['headers/merge'][] = $key.': '.$value;
+					$headers_merge[] = $key.': '.$value;
 				}
 			}
 			
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $data['headers/merge']);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers_merge);
 		}
-		elseif (! empty($this->headers))
+		elseif (! empty($headers))
 		{
-			$data['headers'] = $this->headers;
+			$data['headers'] = $headers;
 			
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		}
 		
 		// Прокси
@@ -673,16 +708,16 @@ class Atomic
 	// Разбитие результата http запроса
 	protected function expResponse($response = '')
 	{
-		if ($this->existStr($response, "100 Continue\r\n\r\n"))
+		$exp = explode("\r\n\r\n", $response, 2);
+		
+		if (! preg_match('~^HTTP~i', $exp[1]))
 		{
-			$exp = explode("\r\n\r\n", $response, 3);
-			
-			return [$exp[0]."\r\n".$exp[1], $exp[2]];
+			return $exp;
 		}
-		else
-		{
-			return explode("\r\n\r\n", $response, 2);
-		}
+		
+		$exp = explode("\r\n\r\n", $response, 3);
+		
+		return [$exp[0]."\r\n\r\n".$exp[1], $exp[2]];
 	}
 	
 	protected function cookieFileWp($path)
