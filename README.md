@@ -55,7 +55,7 @@ $atom->set([
 	'phantomjs_path' => __DIR__ .'/bin/phantomjs.exe',
 	// Ключь сервиса ruCaptcha
 	'rucaptcha_key' => '6df61bfae47c6a9214729143c4fc9a82',
-	// HTTP заголовки по умолчанию
+	// HTTP заголовки/планы по умолчанию
 	'headers' => [
 		'default' => [
 			'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
