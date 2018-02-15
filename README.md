@@ -57,8 +57,17 @@ $atom->set([
 	'rucaptcha_key' => '6df61bfae47c6a9214729143c4fc9a82',
 	// HTTP заголовки по умолчанию
 	'headers' => [
-		'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-		'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36',
+		'default' => [
+			'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+			'Upgrade-Insecure-Requests: 1',
+			'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
+		],
+		'ajax' => [
+			'Accept: */*',
+			'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+			'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
+			'X-Requested-With: XMLHttpRequest',
+		],
 	],
 ]);
 ```
@@ -117,6 +126,12 @@ $result = $atom->request([
 	],
 	// Путь к файл cookie
 	'cookie_path' => __DIR__ .'/tmp/atomic.cookie',
+	// Лямбда функции cURL (header, progress, read, write)
+	'callbacks' => [
+		'write' => function($curl, $content){
+			return strlen($content);
+		}
+	],
 	// Сменить кодировку контента из windows-1251 на utf8
 	'charset' => 'windows-1251',
 	// Следовать по заголовкам Location

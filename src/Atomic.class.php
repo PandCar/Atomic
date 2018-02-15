@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Atomic - Library for parsing
+ * 
  * @author Oleg Isaev
  * @contacts vk.com/id50416641, t.me/pandcar, github.com/pandcar
- * @version 1.3.1
+ * @version 1.4.2
  */
 
 class Atomic
@@ -33,6 +35,12 @@ class Atomic
 						'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
 						'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
 					],
+				],
+				$curl_callback_constants = [
+					'header'	=> CURLOPT_HEADERFUNCTION,
+					'progress'	=> CURLOPT_PROGRESSFUNCTION,
+					'read'		=> CURLOPT_READFUNCTION,
+					'write'		=> CURLOPT_WRITEFUNCTION,
 				],
 				$phantomjs_path = null,
 				$rucaptcha_key = null,
@@ -610,6 +618,23 @@ class Atomic
 			curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_path);
 		}
 		
+		// Лямбда функции
+		if (! empty($data['callbacks']) && is_array($data['callbacks']))
+		{
+			$callbacks = $data['callbacks'];
+			$data['callbacks'] = [];
+			
+			foreach ($callbacks as $name => $callback)
+			{
+				if (isset($this->curl_callback_constants[$name]))
+				{
+					curl_setopt($ch, $this->curl_callback_constants[$name], $callback);
+					
+					$data['callbacks'][$name] = $callback;
+				}
+			}
+		}
+		
 		return [$ch, $data];
 	}
 	
@@ -641,8 +666,18 @@ class Atomic
 			
 			if (is_callable($callback))
 			{
-				$callback($data, $response);
+				$string = $callback($data, $response);
+				
+				if ($string != null)
+				{
+					$response = $string;
+				}
 			}
+		}
+		
+		if (is_bool($response))
+		{
+			return $response;
 		}
 		
 		// Следование по заголовку Location
