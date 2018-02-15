@@ -108,7 +108,7 @@ $result = $atom->request([
 		'password' => $password,
 		'submit' => 'Войти',
 	],
-	// Загрузка конктента в файл
+	// Загрузка контента в файл
 	'file_handle' => $fopen,
 	// План заголовков
 	'headers_plan' => 'ajax',
