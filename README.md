@@ -80,8 +80,12 @@ $result = $atom->request('http://site.ru/');
 
 // Мульти запрос
 $array = $atom->request_multi([
-	['url' => 'http://site.ru/'],
-	['url' => 'http://site2.ru/'],
+	[
+		'url' => 'http://site.ru/?foo=bar'
+	],
+	[
+		'url' => 'http://sitetwo.ru/'
+	],
 ]);
 
 // Все опции
