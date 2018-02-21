@@ -152,7 +152,7 @@ $result = $atom->request([
 	'form' => 'json',
 	// Включает отладку
 	'debug' => true,
-	// Не вызывать callback_request
+	// Не вызывать callback_request_*
 	'no_callback' => true,
 ]);
 ```
