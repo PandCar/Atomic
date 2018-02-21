@@ -5,7 +5,7 @@
  * 
  * @author Oleg Isaev
  * @contacts vk.com/id50416641, t.me/pandcar, github.com/pandcar
- * @version 1.4.2
+ * @version 1.5.0
  */
 
 class Atomic
@@ -491,7 +491,8 @@ class Atomic
 		// Основные параметры
 		curl_setopt($ch, CURLOPT_URL, $data['url']); 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_HEADER, !isset($data['no_headers']));
+		curl_setopt($ch, CURLOPT_NOBODY, isset($data['no_body']));
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, (! empty($data['connect_timeout']) ? $data['connect_timeout'] : $this->connect_timeout));
 		curl_setopt($ch, CURLOPT_TIMEOUT, (! empty($data['timeout']) ? $data['timeout'] : $this->timeout));
 		curl_setopt($ch, CURLOPT_ENCODING, '');
@@ -633,6 +634,11 @@ class Atomic
 					$data['callbacks'][$name] = $callback;
 				}
 			}
+		}
+		
+		if (! empty($data['curl_setopt']) && is_array($data['curl_setopt']))
+		{
+			curl_setopt_array($ch, $data['curl_setopt']);
 		}
 		
 		return [$ch, $data];

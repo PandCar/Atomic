@@ -136,6 +136,14 @@ $result = $atom->request([
 			return strlen($content);
 		}
 	],
+	// Прямая установка параметров cURL (приоритет)
+	'curl_setopt' => [
+		CURLOPT_HEADER => true,
+	],
+	// Исключения Заголовков ответа из результата cURL
+	'no_headers' => true,
+	// Исключения Тела ответа из результата cURL
+	'no_body' => true,
 	// Сменить кодировку контента из windows-1251 на utf8
 	'charset' => 'windows-1251',
 	// Следовать по заголовкам Location
